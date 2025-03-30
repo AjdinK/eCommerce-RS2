@@ -35,3 +35,4 @@
 /Users/loww/RiderProjects/eCommerce/eCommerceWebAPI/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
 /Users/loww/RiderProjects/eCommerce/eCommerceWebAPI/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/loww/RiderProjects/eCommerce/eCommerceWebAPI/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/loww/RiderProjects/eCommerce/eCommerceWebAPI/obj/Debug/net9.0/eCommerceWebAPI.sourcelink.json
