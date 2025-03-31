@@ -16,9 +16,9 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("")]
-    public List<Product> Get()
+    public List<Product> Get([FromQuery] ProductSearchObject? search)
     {
-        return _productService.Get();
+        return _productService.Get(search);
     }
 
     [HttpGet("id")]

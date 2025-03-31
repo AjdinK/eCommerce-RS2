@@ -10,7 +10,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddTransient<IProductService, ProductService>();
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
