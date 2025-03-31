@@ -38,3 +38,5 @@
 /Users/loww/RiderProjects/eCommerce/eCommerceWebAPI/obj/Debug/net9.0/eCommerceWebAPI.sourcelink.json
 /Users/loww/RiderProjects/eCommerce/eCommerceWebAPI/bin/Debug/net9.0/eCommerce.Model.dll
 /Users/loww/RiderProjects/eCommerce/eCommerceWebAPI/bin/Debug/net9.0/eCommerce.Model.pdb
+/Users/loww/RiderProjects/eCommerce/eCommerceWebAPI/bin/Debug/net9.0/eCommerce.Services.dll
+/Users/loww/RiderProjects/eCommerce/eCommerceWebAPI/bin/Debug/net9.0/eCommerce.Services.pdb

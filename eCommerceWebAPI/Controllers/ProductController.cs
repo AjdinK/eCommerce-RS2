@@ -1,4 +1,5 @@
 using eCommerce.Model;
+using eCommerce.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerceWebAPI.Controllers;
@@ -7,18 +8,22 @@ namespace eCommerceWebAPI.Controllers;
 [Route("[controller]")]
 public class ProductController : ControllerBase
 {
-    [HttpGet]
-    public IEnumerable<Product> Get()
+    protected readonly IProductService _productService;
+
+    public ProductController(IProductService productService)
     {
-        List<Product> products =
-        [
-            new()
-            {
-                Id = 1,
-                Name = "Product 1",
-                Code = "1234"
-            }
-        ];
-        return products;
+        _productService = productService;
+    }
+
+    [HttpGet("")]
+    public List<Product> Get()
+    {
+        return _productService.Get();
+    }
+
+    [HttpGet("id")]
+    public Product Get(int id)
+    {
+        return _productService.Get(id);
     }
 }

@@ -31,7 +31,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "com.codeium.enabled": "true",
     "rider.code.cleanup.on.save": "true",
-    "settings.editor.selected.configurable": "actions.on.save"
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.eCommerce: http">
