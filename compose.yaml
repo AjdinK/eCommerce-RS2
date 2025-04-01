@@ -1,0 +1,6 @@
+﻿services:
+  ecommerec-test:
+    image: ecommerec-test
+    build:
+      context: .
+      dockerfile: eCommerec-test/Dockerfile

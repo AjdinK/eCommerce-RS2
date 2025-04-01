@@ -1,46 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using eCommerce.Model;
 
-namespace eCommerce.Services;
-
-public class ProductService : IProductService
+namespace eCommerce.Services
 {
-    public List<Product> Get(ProductSearchObject? search)
+    public class ProductService : IProductService
     {
-        var products = new List<Product>
+        public List<Product> Get(ProductSearchObject? searchObject)
         {
-            new()
+            var products = new List<Product>
             {
-                Id = 1,
-                Name = "Lenovo Laptop",
-                Code = "1234"
-            },
-            new()
-            {
-                Id = 2,
-                Name = "Macbook Pro",
-                Code = "5678"
-            }
-        };
+                new Product
+                {
+                    Id = 1,
+                    Name = "Lenovo Laptop",
+                    Code = "1234"
+                },
+                new Product
+                {
+                    Id = 2,
+                    Name = "Apple Macbook",
+                    Code = "5678"
+                }
+            };
 
-        var query = products.AsQueryable();
+            var query = products.AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(search?.FTS))
-            query = query.Where(x =>
-                x.Code.Contains(search.FTS, StringComparison.CurrentCultureIgnoreCase) ||
-                x.Name.Contains(search.FTS, StringComparison.CurrentCultureIgnoreCase));
+            if (!string.IsNullOrWhiteSpace(searchObject?.Code))
+                query = query.Where(x => x.Code == searchObject.Code);
 
-        if (!string.IsNullOrWhiteSpace(search?.Code))
-            query = query.Where(x => x.Code == search.Code);
+            if (!string.IsNullOrWhiteSpace(searchObject?.Code))
+                query = query.Where(x => x.Code.Contains(searchObject.Code, StringComparison.CurrentCultureIgnoreCase));
 
-        if (!string.IsNullOrWhiteSpace(search?.CodeGTE))
-            query = query.Where(x => x.Code.StartsWith(search.CodeGTE));
+            if (!string.IsNullOrWhiteSpace(searchObject?.FTS))
+                query = query.Where(x => x.Name.Contains(searchObject.FTS, StringComparison.CurrentCultureIgnoreCase));
 
-        return query.ToList();
-    }
+            return query.ToList();
+        }
 
-    public Product Get(int id)
-    {
-        return Get(null).FirstOrDefault(x => x.Id == id)
-               ?? throw new InvalidOperationException();
+
+        public Product Get(int id)
+        {
+            return Get(null).FirstOrDefault(x => x.Id == id) ??
+                   throw new Exception("Product not found");
+        }
     }
 }

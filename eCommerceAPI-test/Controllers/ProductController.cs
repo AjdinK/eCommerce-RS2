@@ -2,7 +2,7 @@ using eCommerce.Model;
 using eCommerce.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace eCommerceWebAPI.Controllers;
+namespace eCommerec_test.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -16,12 +16,12 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("")]
-    public List<Product> Get([FromQuery] ProductSearchObject? search)
+    public List<Product> Get([FromQuery] ProductSearchObject? searchObject)
     {
-        return _productService.Get(search);
+        return _productService.Get(searchObject);
     }
 
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public Product Get(int id)
     {
         return _productService.Get(id);

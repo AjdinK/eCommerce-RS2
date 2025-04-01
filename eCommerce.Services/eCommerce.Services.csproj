@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\eCommerce.Model\eCommerce.Model.csproj"/>
+      <ProjectReference Include="..\eCommerce.Model\eCommerce.Model.csproj" />
     </ItemGroup>
 
 </Project>
