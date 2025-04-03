@@ -3,13 +3,15 @@ using eCommerce.Services.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddTransient<IProductService, DummyProductService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
 
 // Configure database
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Server=localhost;Database=eCommerceDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                       "Server=localhost,1433;Database=eCommerceDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
 builder.Services.AddDatabaseServices(connectionString);
 
 builder.Services.AddControllers();
@@ -30,13 +32,19 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+        options.RoutePrefix = string.Empty;
+        options.DocumentTitle = "eCommerceAPI-test";
+        options.EnableDeepLinking();
+    });
 }
 
+//http://localhost:5121/index.html
+
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
