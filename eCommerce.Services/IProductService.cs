@@ -1,11 +1,17 @@
+﻿using eCommerce.Model;
+using eCommerce.Model.SearchObjects;
+using eCommerce.Model.Responses;
+using System;
 using System.Collections.Generic;
-using eCommerce.Model;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace eCommerce.Services
 {
     public interface IProductService
     {
-        public List<Product> Get(ProductSearchObject? searchObject);
-        public Product Get(int id);
+        Task<List<ProductResponse>> GetAsync(ProductSearchObject search);
+        Task<ProductResponse?> GetByIdAsync(int id);
     }
 }

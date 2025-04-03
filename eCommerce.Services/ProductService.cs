@@ -1,49 +1,65 @@
+﻿using eCommerce.Model;
+using eCommerce.Model.SearchObjects;
+using eCommerce.Model.Responses;
+using eCommerce.Services.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using eCommerce.Model;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace eCommerce.Services
 {
     public class ProductService : IProductService
     {
-        public List<Product> Get(ProductSearchObject? searchObject)
+        private readonly eCommerceDbContext _context;
+
+        public ProductService(eCommerceDbContext context)
         {
-            var products = new List<Product>
-            {
-                new Product
-                {
-                    Id = 1,
-                    Name = "Lenovo Laptop",
-                    Code = "1234"
-                },
-                new Product
-                {
-                    Id = 2,
-                    Name = "Apple Macbook",
-                    Code = "5678"
-                }
-            };
-
-            var query = products.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(searchObject?.Code))
-                query = query.Where(x => x.Code == searchObject.Code);
-
-            if (!string.IsNullOrWhiteSpace(searchObject?.Code))
-                query = query.Where(x => x.Code.Contains(searchObject.Code, StringComparison.CurrentCultureIgnoreCase));
-
-            if (!string.IsNullOrWhiteSpace(searchObject?.FTS))
-                query = query.Where(x => x.Name.Contains(searchObject.FTS, StringComparison.CurrentCultureIgnoreCase));
-
-            return query.ToList();
+            _context = context;
         }
 
-
-        public Product Get(int id)
+        public async Task<List<ProductResponse>> GetAsync(ProductSearchObject search)
         {
-            return Get(null).FirstOrDefault(x => x.Id == id) ??
-                   throw new Exception("Product not found");
+            var query = _context.Products.AsQueryable();
+            
+            if (!string.IsNullOrEmpty(search.Code))
+            {
+                query = query.Where(p => p.SKU.Contains(search.Code));
+            }
+            
+            if (!string.IsNullOrEmpty(search.CodeGTE))
+            {
+                query = query.Where(p => p.SKU.StartsWith(search.CodeGTE));
+            }
+            
+            if (!string.IsNullOrEmpty(search.FTS))
+            {
+                query = query.Where(p => 
+                    (p.SKU != null && p.SKU.Contains(search.FTS)) || 
+                    p.Name.Contains(search.FTS) ||
+                    p.Description.Contains(search.FTS));
+            }
+            
+            var products = await query.ToListAsync();
+            return products.Select(MapToResponse).ToList();
+        }
+
+        public async Task<ProductResponse?> GetByIdAsync(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            return product != null ? MapToResponse(product) : null;
+        }
+
+        private ProductResponse MapToResponse(Database.Product product)
+        {
+            return new ProductResponse
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Code = product.SKU ?? string.Empty
+            };
         }
     }
 }
