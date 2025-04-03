@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
-builder.Services.AddTransient<IProductService, DummyProductService>();
+builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
 
@@ -41,7 +41,6 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-//http://localhost:5121/index.html
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
