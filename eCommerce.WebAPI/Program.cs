@@ -11,7 +11,7 @@ builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
 
 // Configure database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                       "Server=localhost,1433;Database=eCommerceDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+                       "Server=localhost,1433;Database=semDB;Trusted_Connection=false;User ID=sa;Password=yourStrong123Aaa_aPassword; MultipleActiveResultSets=true;TrustServerCertificate=true";
 builder.Services.AddDatabaseServices(connectionString);
 
 builder.Services.AddControllers();
